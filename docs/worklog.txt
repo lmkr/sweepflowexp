@@ -33,6 +33,14 @@ The following generated files contains use of signatures that do not exists:
 Setup of a git repository to be able to do development across several
 machines and in order to have version control.
 
-Created build.sml build ml files in bloodtest example. Loads everything.
+Created build.sml build ml files in bloodtest example. Loads
+everything.
+
+Created buildbt.sml to load the compiled files.
+
+The problem with model.sml seems to be related to getCurrentState and
+getEvents which are not matched by the opened structures. Perhaps
+getCurrentState should not be there since it means that the simulator
+is not function. getEvent should possibly be getEnabledEvents
 
 
