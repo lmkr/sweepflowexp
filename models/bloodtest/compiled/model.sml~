@@ -1,0 +1,151 @@
+(*
+ * File:            model.sml
+ * Generation date: Mon Jan 14 19:27:35 2013
+ *
+ * Run-time checks: true
+ *)
+
+structure DveModel: MODEL = struct
+open DveDefinitions
+open DveEnablingTest
+open DveEventExecution
+fun getInitialStates () = let
+   fun generateInitialState () = let
+      val tmp1 = (0)
+      val tmp2 = (0)
+      val tmp3 = (0)
+      val tmp4 = (0)
+      val tmp5 = (0)
+      val tmp6 = (0)
+      val tmp7 = (0)
+      val tmp8 = (0)
+      val tmp9 = (0)
+      val tmp10 = (0)
+      val tmp11 = (~ (1) handle Overflow => raise ModelError (11, "overflow"))
+   in
+      {
+GV_c =
+tmp11,
+GV_f6 =
+tmp10,
+GV_g5 =
+tmp9,
+GV_f5 =
+tmp8,
+GV_g4 =
+tmp7,
+GV_f4 =
+tmp6,
+GV_f3 =
+tmp5,
+GV_f2 =
+tmp4,
+GV_g2 =
+tmp3,
+GV_g1 =
+tmp2,
+GV_f1 =
+tmp1,
+P_finalevaluation_S =
+INIT_P_finalevaluation,
+P_procedure_b_S =
+INIT_P_procedure_b,
+P_checkforprocedure_S =
+INIT_P_checkforprocedure,
+P_procedure_a_S =
+INIT_P_procedure_a,
+P_evaluation_S =
+INIT_P_evaluation,
+P_bloodtest_S =
+INIT_P_bloodtest,
+P_mri_S =
+INIT_P_mri,
+P_initialevaluation_S =
+INIT_P_initialevaluation
+}
+   end
+   val init = generateInitialState ()
+in
+   [ (init, getEnabledEvents (init)) ]
+end
+fun stateToString (s: state) = let
+in
+   "{" ^
+   "\n   f1 = " ^ baseToString(#GV_f1 s) ^ "" ^
+   "\n   g1 = " ^ baseToString(#GV_g1 s) ^ "" ^
+   "\n   g2 = " ^ baseToString(#GV_g2 s) ^ "" ^
+   "\n   f2 = " ^ baseToString(#GV_f2 s) ^ "" ^
+   "\n   f3 = " ^ baseToString(#GV_f3 s) ^ "" ^
+   "\n   f4 = " ^ baseToString(#GV_f4 s) ^ "" ^
+   "\n   g4 = " ^ baseToString(#GV_g4 s) ^ "" ^
+   "\n   f5 = " ^ baseToString(#GV_f5 s) ^ "" ^
+   "\n   g5 = " ^ baseToString(#GV_g5 s) ^ "" ^
+   "\n   f6 = " ^ baseToString(#GV_f6 s) ^ "" ^
+   "\n   c = " ^ baseToString(#GV_c s) ^ "" ^
+   "\n   InitialEvaluation @ " ^ P_initialevaluation_STATE_TYPE_ToString (#P_initialevaluation_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   Mri @ " ^ P_mri_STATE_TYPE_ToString (#P_mri_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodTest @ " ^ P_bloodtest_STATE_TYPE_ToString (#P_bloodtest_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   Evaluation @ " ^ P_evaluation_STATE_TYPE_ToString (#P_evaluation_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   Procedure_a @ " ^ P_procedure_a_STATE_TYPE_ToString (#P_procedure_a_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   CheckForProcedure @ " ^ P_checkforprocedure_STATE_TYPE_ToString (#P_checkforprocedure_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   Procedure_b @ " ^ P_procedure_b_STATE_TYPE_ToString (#P_procedure_b_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   FinalEvaluation @ " ^ P_finalevaluation_STATE_TYPE_ToString (#P_finalevaluation_S s) ^ " {" ^
+   "\n   }" ^
+"\n}\n"
+end
+fun eventToString (e: event) =
+   case e
+    of DUMMY_EVENT => ""
+    | LOC_0_P_initialevaluation_T_disabled_TO_enabled => "(InitialEvaluation: disabled -> enabled)"
+    | LOC_1_P_initialevaluation_T_enabled_TO_running => "(InitialEvaluation: enabled -> running)"
+    | LOC_2_P_initialevaluation_T_running_TO_finished => "(InitialEvaluation: running -> finished)"
+    | LOC_3_P_mri_T_disabled_TO_enabled => "(Mri: disabled -> enabled)"
+    | LOC_4_P_mri_T_enabled_TO_running => "(Mri: enabled -> running)"
+    | LOC_5_P_mri_T_running_TO_finished => "(Mri: running -> finished)"
+    | LOC_6_P_bloodtest_T_disabled_TO_enabled => "(BloodTest: disabled -> enabled)"
+    | LOC_7_P_bloodtest_T_enabled_TO_running => "(BloodTest: enabled -> running)"
+    | LOC_8_P_bloodtest_T_running_TO_finished => "(BloodTest: running -> finished)"
+    | LOC_9_P_evaluation_T_disabled_TO_enabled => "(Evaluation: disabled -> enabled)"
+    | LOC_10_P_evaluation_T_enabled_TO_running => "(Evaluation: enabled -> running)"
+    | LOC_11_P_evaluation_T_running_TO_finished => "(Evaluation: running -> finished)"
+    | LOC_12_P_procedure_a_T_disabled_TO_enabled => "(Procedure_a: disabled -> enabled)"
+    | LOC_13_P_procedure_a_T_enabled_TO_running => "(Procedure_a: enabled -> running)"
+    | LOC_14_P_procedure_a_T_running_TO_finished => "(Procedure_a: running -> finished)"
+    | LOC_15_P_checkforprocedure_T_disabled_TO_enabled => "(CheckForProcedure: disabled -> enabled)"
+    | LOC_16_P_checkforprocedure_T_enabled_TO_running => "(CheckForProcedure: enabled -> running)"
+    | LOC_17_P_checkforprocedure_T_running_TO_finished => "(CheckForProcedure: running -> finished)"
+    | LOC_18_P_checkforprocedure_T_running_TO_finished => "(CheckForProcedure: running -> finished)"
+    | LOC_19_P_procedure_b_T_disabled_TO_enabled => "(Procedure_b: disabled -> enabled)"
+    | LOC_20_P_procedure_b_T_enabled_TO_running => "(Procedure_b: enabled -> running)"
+    | LOC_21_P_procedure_b_T_running_TO_finished => "(Procedure_b: running -> finished)"
+    | LOC_22_P_finalevaluation_T_disabled_TO_enabled => "(FinalEvaluation: disabled -> enabled)"
+    | LOC_23_P_finalevaluation_T_disabled_TO_enabled => "(FinalEvaluation: disabled -> enabled)"
+    | LOC_24_P_finalevaluation_T_enabled_TO_running => "(FinalEvaluation: enabled -> running)"
+    | LOC_25_P_finalevaluation_T_running_TO_finished => "(FinalEvaluation: running -> finished)"
+fun nextStates (s, DUMMY_EVENT) = raise Impossible ""
+  | nextStates (s, e) = let
+   val next = execEvent (s, e)
+in
+   [ (next, getEnabledEvents (next)) ]
+end
+fun executeSequence (s: state, seq: event list) = let
+   fun loop ((s, evts), seq) =
+      (s, evts) :: 
+      (case seq of [] => []
+                 | evt :: seq' => let
+                    val next     = execEvent (s, evt)
+                    val nextEvts = getEnabledEvents (next)
+                 in
+                    loop ((next, nextEvts), seq')
+                 end)
+in
+   loop ((s, getEnabledEvents s), seq)
+end
+end

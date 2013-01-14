@@ -1,0 +1,10 @@
+Need to use dos2unix in order to be able to parse properly.
+
+In bt.dve there was an occurcen of X, c==1 that was changed to X && c==1
+
+Inconsistencise that need to be fixed between generated code and signatures:
+
+- MODEL signature
+- SERIALISER signature
+- HASH_FUNCTION signature
+- INDEPENDEN_RELATION (does the signature exists?)
