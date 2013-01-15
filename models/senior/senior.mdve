@@ -197,7 +197,7 @@
 
 	process REHAB_RECAP {
 		state disabled, enabled, dataassertion1, dataassertion2, running, finished;
-		commit dataassertion1, dataassertion2;
+		// commit dataassertion1, dataassertion2;
 		init disabled;
 		trans
 		disabled -> enabled { guard Flow9 > 0 || Loop6 > 0 ; effect Flow9 = 0, Loop6 = 0; },

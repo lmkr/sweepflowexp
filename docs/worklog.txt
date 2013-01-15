@@ -43,4 +43,11 @@ getEvents which are not matched by the opened structures. Perhaps
 getCurrentState should not be there since it means that the simulator
 is not function. getEvent should possibly be getEnabledEvents
 
+15/01/2013
+==========
+
+Setup and initial attempt at compiling the senior care workflow.
+
+Most works fine, but there is a problem with the commit construct.
+
 
