@@ -8,6 +8,8 @@ CM.make "/cygdrive/d/cpndev/trunk/siminterface/interfaces/serializer-sig.cm";
 *)
 
 use "snload.sml";
-compilesn ();
+
+(* compilesn ();
 
 CM.make "compiled/all.cm";
+*)

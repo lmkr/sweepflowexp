@@ -1,0 +1,502 @@
+		
+	int Flow0 = 0; 
+	int Flow1 = 0; 
+	int Flow2 = 0; 
+	int Flow3 = 0; 
+	int Flow4 = 0; 
+	int Flow5 = 0; 
+	int Flow6 = 0; 
+	int Flow7 = 0; 
+	int Flow8 = 0; 
+	int Flow9 = 0; 
+	int Flow10 = 0; 
+	int Flow11 = 0; 
+	int Flow12 = 0; 
+	int Flow13 = 0; 
+	int Flow14 = 0; 
+	int Flow15 = 0; 
+	int Flow16 = 0; 
+	int Flow17 = 0; 
+	int Flow18 = 0; 
+	int Flow19 = 0; 
+	int Flow20 = 0; 
+	int Flow21 = 0; 
+	int Flow22 = 0; 
+	int Flow23 = 0; 
+	int Flow24 = 0; 
+	int Flow25 = 0; 
+	int Flow26 = 0; 
+	int Flow27 = 0; 
+	int Flow28 = 0; 
+	int Flow29 = 0; 
+	int Flow30 = 0; 
+	int Flow31 = 0; 
+	int Flow32 = 0; 
+	int Flow33 = 0; 
+	int Flow34 = 0; 
+	int Flow35 = 0; 
+	int Flow36 = 0; 
+	int Flow37 = 0; 
+	int Flow38 = 0; 
+	int Flow39 = 0; 
+	int Flow40 = 0; 
+	int Flow41 = 0; 
+	int Flow42 = 0; 
+	int Flow43 = 0; 
+	int Flow44 = 0; 
+	int Flow45 = 0; 
+	int Flow46 = 0; 
+	int Flow47 = 0; 
+	int Flow48 = 0; 
+	int Flow49 = 0; 
+	int Flow50 = 0; 
+	int Flow51 = 0; 
+	int Flow52 = 0; 
+	int Flow53 = 0; 
+	int Flow54 = 0; 
+	int Flow55 = 0; 
+	int Flow56 = 0; 
+		
+	int Loop0 = 0; 
+	int Loop1 = 0; 
+	int Loop2 = 0; 
+	int Loop3 = 0; 
+	int Loop4 = 0; 
+	int Loop5 = 0; 
+	int Loop6 = 0; 
+	int Loop7 = 0; 
+	int Loop8 = 0; 
+	int Loop9 = 0; 
+	int Loop10 = 0; 
+	int Loop11 = 0; 
+	int Loop12 = 0; 
+	int Loop13 = 0; 
+		
+	int medicationFlag1 		= 0;
+	int medicationFlag2     = 0;
+	int bloodPressureFlag 	= 0;
+	int mildlyFrailFlag 		= 0;
+	int dementiaFlag 			= 0;
+	int referToOTFlag 		= 0;
+	int referToPTFlag			= 0;
+	int referToSWFlag		= 0;
+	int referToPhysicianFlag				= 0;
+	int referToPharmacistFlag			= 0;
+	int referToFamilyPhysicianFlag 	= 0;
+	int referToContinuingCareFlag 	= 0;
+	int referToGClinicFlag					= 0;
+	int issueFlag									= 0;
+	int dischargeFlag							= 0;
+	
+	int priority = 0;
+	int otConsentFlag = 0;
+	int ptConsentFlag = 0;
+	int swConsentFlag = 0;
+	
+	int dflag = 0; 
+		
+	process Registration {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0; },
+		enabled -> running { guard dflag == 0;},
+		running -> finished { guard dflag == 0; effect Flow0 = 1, Flow1  = 1, Flow2  = 1, Flow3  = 1
+		, Flow4  = 1, Flow5  = 1, Flow6  = 1, Flow7  = 1
+		, Flow8  = 1, Flow9  = 1, Flow10  = 1, Flow11  = 1
+		, Flow1  = 12, Flow13  = 1; };		
+	}
+
+	process REFER_TO_OT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && ( Flow0 > 0 || Loop13  > 0 ) && referToOTFlag > 0;  effect Flow0 = 0 , Loop13 = 0, referToOTFlag = 0 ; },
+		enabled -> running { guard dflag == 0; effect priority = 0; },
+		enabled -> running { guard dflag == 0; effect priority = 1; },
+		enabled -> running { guard dflag == 0; effect priority = 2; },
+		running -> disabled { guard dflag == 0; effect Flow14 = 1; };		
+	}
+
+	process REFER_TO_PT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && ( Flow1 > 0 || Loop12 > 0) && referToPTFlag > 0; effect Flow1 = 0, Loop12 = 0, referToPTFlag = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow15 = 1; };		
+	}
+
+	process REFER_TO_SW {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow2 > 0 || Loop11 > 0) && referToSWFlag > 0; effect Flow2 = 0, Loop11 = 0, referToSWFlag = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow16 = 1; };		
+	}
+
+	process REFER_TO_PHYSICIAN {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow3 > 0 || Loop0 > 0 ) && referToPhysicianFlag > 0; effect Flow3 = 0, referToPhysicianFlag = 0, Loop0 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow46 = 1, Loop0 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop0 = 1, Flow46 = 0; }; // loop is valid until discharge
+	}
+
+	process REFER_TO_PHARMACIST {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow4 > 0 || Loop1 > 0) && referToPharmacistFlag > 0; effect Flow4 = 0, referToPharmacistFlag = 0, Loop1 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0 ; effect Flow47 = 1, Loop1 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop1 = 1, Flow47 = 0; };// loop is valid until discharge
+	}
+
+	process REFER_TO_FAMILY_PHYSICIAN {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow5 > 0 || Loop2 > 0) && referToFamilyPhysicianFlag > 0; effect Flow5 = 0, referToFamilyPhysicianFlag = 0, Loop2 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow48 = 1, Loop2 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0; effect Loop2 = 1, Flow48 = 0; };	// loop is valid until discharge
+	}
+
+	process REFER_TO_CONTINUING_CARE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow6 > 0 || Loop3 > 0) && referToContinuingCareFlag > 0 ; effect Flow6 = 0, referToContinuingCareFlag = 0, Loop3 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow49 = 1, Loop3 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0; effect Loop3 = 1, Flow49 = 0; };	// loop is valid until discharge
+	}
+
+	process REFER_TO_GERIATRIC_CLINIC {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow7 > 0 || Loop4 > 0 ) && referToGClinicFlag > 0; effect Flow7 = 0, referToGClinicFlag = 0, Loop4 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow50 = 1, Loop4 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop4 = 1, Flow50 = 0; };// loop is valid until discharge
+	}
+
+	process ISSUES_NEED_TO_RESOLVE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow8 > 0 || Loop5 > 0) && issueFlag > 0 ; effect Flow8 = 0, issueFlag = 0, Loop5 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow51 = 1, Loop5 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop5 = 1, Flow51 = 0; };// loop is valid until discharge
+	}
+
+	process REHAB_RECAP {
+		state disabled, enabled, dataassertion1, dataassertion2, running, finished;		
+		init disabled;
+		trans
+		disabled -> enabled { guard  Flow9 > 0 || Loop6 > 0 ; effect Flow9 = 0, Loop6 = 0; },
+		enabled -> dataassertion1 { guard referToOTFlag == 0 ; effect  referToOTFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToPTFlag == 0 ; effect  referToPTFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToSWFlag == 0; effect  referToSWFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToPhysicianFlag == 0 ; effect  referToPhysicianFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToPharmacistFlag == 0 ; effect  referToPharmacistFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToFamilyPhysicianFlag == 0 ; effect  referToFamilyPhysicianFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToContinuingCareFlag == 0 ; effect  referToContinuingCareFlag 		= 1 , dflag = 1; },
+		enabled -> dataassertion1 { guard referToGClinicFlag == 0 ; effect  referToGClinicFlag 		= 1 , dflag = 1; },				
+		enabled -> dataassertion1 { effect issueFlag = 1 , dflag = 1; }, // issue need to resolve
+		enabled -> dataassertion1 { effect issueFlag = 0 , dflag = 1; }, // issue is resolved
+		enabled -> dataassertion1 { effect dflag = 1; },
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 0, mildlyFrailFlag = 0, dementiaFlag = 0 ; },
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 0, mildlyFrailFlag = 0, dementiaFlag = 1 ; },
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 0, mildlyFrailFlag = 1, dementiaFlag = 0 ; },				
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 0, mildlyFrailFlag = 1, dementiaFlag = 1 ; },
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 1, mildlyFrailFlag = 0, dementiaFlag = 0 ; },
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 1, mildlyFrailFlag = 0, dementiaFlag = 1 ; },		
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 1, mildlyFrailFlag = 1, dementiaFlag = 0 ; },						
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 0, medicationFlag2 = 0,  bloodPressureFlag = 1, mildlyFrailFlag = 1, dementiaFlag = 1 ; },
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 0, mildlyFrailFlag = 0, dementiaFlag = 0 ; },		
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 0, mildlyFrailFlag = 0, dementiaFlag = 1 ; },				
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 0, mildlyFrailFlag = 1, dementiaFlag = 0 ; },				
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 0, mildlyFrailFlag = 1, dementiaFlag = 1 ; },				
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 1, mildlyFrailFlag = 0, dementiaFlag = 0 ; },		
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 1, mildlyFrailFlag = 0, dementiaFlag = 1 ; },		
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 1, mildlyFrailFlag = 1, dementiaFlag = 0 ; },		
+		dataassertion1 -> dataassertion2 { effect medicationFlag1 = 1, medicationFlag2 = 1,  bloodPressureFlag = 1, mildlyFrailFlag = 1, dementiaFlag = 1 ; },		
+														
+		dataassertion2 -> finished { effect Flow52 = 1, Loop6 = 0, dischargeFlag = 1 , dflag = 0; }, // rehab-recap goes to finished state at the time of discharge
+		dataassertion2 -> disabled { effect Loop6 = 1, Flow52 = 0, dflag = 0; };		
+	}
+
+	process QUESTION_REFER_TO_PHARMACIST {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow10 > 0 || Loop7 > 0) && medicationFlag1 > 0; effect Flow10 = 0, medicationFlag1 = 0, Loop7 = 0 ; },
+		enabled -> running { guard dflag == 0 && referToPharmacistFlag == 0; effect referToPharmacistFlag = 1; },
+		enabled -> running { guard dflag == 0;  }, // no change to referToPharmacistFlag
+		running -> finished { guard dflag == 0;  effect Flow53 = 1, Loop7 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop7 = 1, Flow53 = 0; };// loop is valid until discharge
+	}
+
+	process QUESTION_REFER_TO_FAMILY_PHYSICIAN {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow11 > 0 || Loop8 > 0) && bloodPressureFlag > 0 ; effect Flow11 = 0, bloodPressureFlag = 0, Loop8 = 0; },
+		enabled -> running { guard dflag == 0 && referToFamilyPhysicianFlag == 0 ; effect referToFamilyPhysicianFlag = 1; },
+		enabled -> running { guard dflag == 0; } , // no change to referToFamilyPhysicianFlag
+		running -> finished { guard dflag == 0; effect Flow54 = 1, Loop8 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop8 = 1, Flow54 = 0; };// loop is valid until discharge
+	}
+
+	process QUESTION_REFER_TO_PHYSICIAN {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow12 > 0 || Loop9 > 0) && medicationFlag2 > 0; effect Flow12 = 0, medicationFlag2 = 0, Loop9 = 0; },
+		enabled -> running { guard dflag == 0 && referToPhysicianFlag == 0; effect referToPhysicianFlag = 1 ;},
+		enabled -> running { guard dflag == 0;  }, // no change to referToPhysicianFlag
+		running -> finished { guard dflag == 0; effect Flow55 = 1, Loop9 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop9 = 1, Flow55 = 0; };// loop is valid until discharge
+	}
+
+	process QUESTION_REFER_TO_GERIATRIC_CARE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow13 > 0 || Loop10 > 0) &&  (mildlyFrailFlag > 0 || dementiaFlag > 0); effect Flow13 = 0, mildlyFrailFlag = 0, dementiaFlag = 0 , Loop10 = 0 ; },
+		enabled -> running { guard dflag == 0 && referToGClinicFlag == 0 ; effect referToGClinicFlag = 1; },
+		enabled -> running { guard dflag == 0; } , // no change to referToGClinicFlag
+		running -> finished { guard dflag == 0;  effect Flow56 = 1, Loop10 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop10 = 1, Flow56 = 0; };	// loop is valid until discharge
+	}
+
+	process CHECK_FOR_OT_CONSENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow14 > 0; effect Flow14 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0 && otConsentFlag == 0 ; effect Flow17 = 1, Flow18 = 0; },
+		running -> disabled { guard dflag == 0 && otConsentFlag == 1 ; effect Flow18 = 1, Flow17 = 0; };		
+	}
+
+	process CHECK_FOR_PT_CONSENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow15 > 0; effect Flow15 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0 && ptConsentFlag == 0;  effect Flow19 = 1, Flow20 = 0; },
+		running -> disabled { guard dflag == 0 && ptConsentFlag == 1;  effect Flow20 = 1, Flow19 = 0; };		
+	}
+
+	process CHECK_FOR_SW_CONSENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow16 > 0; effect Flow16 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0 && swConsentFlag == 0; effect Flow25 = 1, Flow26 = 0; },
+		running -> disabled { guard dflag == 0 && swConsentFlag == 1; effect Flow26 = 1, Flow25 = 0; };		
+	}
+
+	process OT_CONSENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow17 > 0; effect Flow17 = 0; },
+		enabled -> running { guard dflag == 0; effect otConsentFlag = 1;  },
+		running -> disabled { guard dflag == 0; effect Flow21 = 1; };		
+	}
+
+	process OT_CONSENT_SKIP {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow18 > 0; effect Flow18 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow22 = 1; };		
+	}
+
+	process PT_CONSENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow19 > 0; effect Flow19 = 0; },
+		enabled -> running {  guard dflag == 0; effect ptConsentFlag = 1; },
+		running -> disabled { guard dflag == 0; effect Flow23 = 1; };		
+	}
+
+	process PT_CONSENT_SKIP {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow20 > 0; effect Flow20 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow24 = 1; };		
+	}
+
+	process OT_ASSESSMENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow21 > 0 && Flow22 == 0; effect Flow21 = 0, Flow22 = 0; },
+		disabled -> enabled { guard dflag == 0 && Flow22 > 0 && Flow21 == 0; effect Flow22 = 0, Flow21 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 1, Flow31 = 1, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 1, Flow31 = 1, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 1, Flow31 = 0, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 1, Flow31 = 0, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 0, Flow31 = 1, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 0, Flow31 = 1, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 0, Flow31 = 0, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 1, Flow30 = 0, Flow31 = 0, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 1, Flow31 = 1, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 1, Flow31 = 1, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 1, Flow31 = 0, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 1, Flow31 = 0, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 0, Flow31 = 1, Flow32 = 1; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 0, Flow31 = 1, Flow32 = 0; },
+		running -> disabled { guard dflag == 0; effect Flow29 = 0, Flow30 = 0, Flow31 = 0, Flow32 = 1; };		
+	}
+
+	process PT_ASSESSMENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow23 > 0 && Flow24 == 0; effect Flow23 = 0, Flow24 = 0; },
+		disabled -> enabled { guard dflag == 0 && Flow24 > 0 && Flow23 == 0; effect Flow24 = 0, Flow23 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow37 = 1, Flow38 = 1, Flow39 = 1; }, 
+		running -> disabled { guard dflag == 0; effect Flow37 = 1, Flow38 = 1, Flow39 = 0; }, 
+		running -> disabled { guard dflag == 0; effect Flow37 = 1, Flow38 = 0, Flow39 = 0; }, 
+		running -> disabled { guard dflag == 0; effect Flow37 = 0, Flow38 = 1, Flow39 = 0; }, 
+		running -> disabled { guard dflag == 0; effect Flow37 = 0, Flow38 = 0, Flow39 = 1; }, 
+		running -> disabled { guard dflag == 0; effect Flow37 = 1, Flow38 = 0, Flow39 = 1; }, 
+		running -> disabled { guard dflag == 0; effect Flow37 = 0, Flow38 = 1, Flow39 = 1; }; 		
+	}
+
+	process SW_CONSENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow25 > 0; effect Flow25 = 0; },
+		enabled -> running { guard dflag == 0; effect swConsentFlag = 1 ; },
+		running -> disabled { guard dflag == 0; effect Flow27 = 1; };		
+	}
+
+	process SW_CONSENT_SKIP {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled {guard dflag == 0 && Flow26 > 0; effect Flow26 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow28 = 1; };		
+	}
+
+	process SW_ASSESSMENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow27 > 0 && Flow28 == 0; effect Flow27 = 0, Flow28 = 0; },
+		disabled -> enabled { guard dflag == 0 && Flow28 > 0 && Flow27 == 0; effect Flow28 = 0, Flow27 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow45 = 1, Loop11 = 0; },
+		running -> disabled { guard dflag == 0; effect Loop11 = 1, Flow45 = 0; };		
+	}
+
+	process BARTHEL_INDEX {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow29 > 0; effect Flow29 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow33 = 1; };		
+	}
+
+	process DAILY_ACTIVITY_SCALE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow30 > 0; effect Flow30 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow34 = 1; };		
+	}
+
+	process KITCHEN_ASSESSMENT {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow31 > 0; effect Flow31 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow35 = 1; };		
+	}
+
+	process NONE_REQUIRED {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow32 > 0; effect Flow32 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow36 = 1; };		
+	}
+
+	process ELDERLY_MOBILITY_SCALE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow37 > 0; effect Flow37 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow40 = 1; };		
+	}
+
+	process BERG_BALANCE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow38 > 0; effect Flow38 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow41 = 1; };		
+	}
+
+	process SKIP {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && Flow39 > 0; effect Flow39 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> disabled { guard dflag == 0; effect Flow42 = 1; };		
+	}
+
+	process OT_CONTINUE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow33 > 0 || Flow34 > 0 ||  Flow35 > 0 ||  Flow36 > 0); effect Flow33 = 0, Flow34 = 0, Flow35 = 0, Flow36 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow43 = 1, Loop13 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop13 = 1, Flow43 = 0; };	// loop is valid until discharge
+	}
+
+	process PT_CONTINUE {
+		state disabled, enabled, running, finished;
+		init disabled;
+		trans
+		disabled -> enabled { guard dflag == 0 && (Flow40 > 0 || Flow41 > 0 ||  Flow42 > 0); effect Flow40 = 0, Flow41 = 0, Flow42 = 0; },
+		enabled -> running { guard dflag == 0; },
+		running -> finished { guard dflag == 0; effect Flow44 = 1, Loop12 = 0; },
+		running -> disabled { guard dflag == 0 && dischargeFlag == 0 ; effect Loop12 = 1, Flow44 = 0; };	// loop is valid until discharge
+	}
+
+
+	
+	
+	system async;
+	
