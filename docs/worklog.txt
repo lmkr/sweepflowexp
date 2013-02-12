@@ -50,4 +50,25 @@ Setup and initial attempt at compiling the senior care workflow.
 
 Most works fine, but there is a problem with the commit construct.
 
+16/01/2013
+==========
 
+Received version from Rabbi that can be compiled and do not contain tbe commit construction.
+
+12/02/2013
+==========
+
+Work on fixing problems with MODEL signature: getEvents and
+getCurrentState is missing in the autongenerated code.
+
+It seems that getEnabledEvents should have been getEvents. Fix by adding a line in model.sml
+
+Problem with getCurrentState. The problem can be fixedx in model.sml by adding:
+
+
+val getEvents = getEnabledEvents;
+exception getCurrentStateExn;
+fun getCurrentState () = raise getCurrentStateExn;
+
+for some reason changing the dve-model-compiled do not affect the
+generated code. A potential problem with the compilation manager?

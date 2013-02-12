@@ -1,12 +1,19 @@
-CM.make "/cygdrive/d/cpndev/trunk/siminterface/dve/dve.cm";
-CM.make "/cygdrive/d/cpndev/trunk/asap/platform.cm";
-CM.make "/cygdrive/d/cpndev/trunk/siminterface/interfaces/interfaces.cm";
+(* --- setup of path to the ASAP files to be loaded --- *)
 
-(* CM.make "/cygdrive/d/cpndev/trunk/siminterface/interfaces/model-sig.cm";
-CM.make "/cygdrive/d/cpndev/trunk/siminterface/interfaces/hash-function-sig.cm";
-CM.make "/cygdrive/d/cpndev/trunk/siminterface/interfaces/serializer-sig.cm";
-*)
+(* Becca *)
+val beccapath = "/cygdrive/c/Projects/cpntools/trunk/";
 
+(* HiB *)
+val hibpath = "/cygdrive/c/cpndev/trunk/";
+
+val path = beccapath;
+
+(* --- load the ASAP files --- *)
+CM.make (path^"siminterface/dve/dve.cm");
+CM.make (path^"asap/platform.cm");
+CM.make (path^"siminterface/interfaces/interfaces.cm");
+
+(* --- compile the bloodtest example --- *)
 use "btload.sml";
 compilebt ();
 
