@@ -1,6 +1,6 @@
 (*
  * File:            model.sml
- * Generation date: Mon Jan 14 19:50:03 2013
+ * Generation date: Tue Feb 12 11:59:00 2013
  *
  * Run-time checks: true
  *)
@@ -9,6 +9,11 @@ structure DveModel: MODEL = struct
 open DveDefinitions
 open DveEnablingTest
 open DveEventExecution
+
+val getEvents = getEnabledEvents;
+exception getCurrentStateExn;
+fun getCurrentState () = raise getCurrentStateExn;
+
 fun getInitialStates () = let
    fun generateInitialState () = let
       val tmp1 = (0)
