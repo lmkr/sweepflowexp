@@ -73,6 +73,17 @@ fun getCurrentState () = raise getCurrentStateExn;
 for some reason changing the dve-model-compiled do not affect the
 generated code. A potential problem with the compilation manager?
 
+
 Current the work process is to use "build.sml"; and then use
 "loadcompiled.sml" after having fixed compilation error related to
 MODEL. Then "run.sml" can be used to execute the model.
+
+Setup basic exploration and sweep-line exploration with a simple
+progress measure using the control variables. It could be refined
+further to take into account also the disabled, enabled, running and
+completed substates. State space has 38 states and 46 arcs. The peak
+currently is 16.
+
+At thus stage it suffices to simply load CM.make "platform.cm" and
+then loadcompiled.sml
+
