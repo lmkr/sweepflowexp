@@ -35,11 +35,15 @@ fun explore () = RealSimpleTraceBTExploration.explore btstorage initialstates;
 
 structure PM_ORD_KEY : ORD_KEY = 
 struct
-  type ord_key = int;
+  type ord_key = IntInf.int;
+  val compare = IntInf.compare;
+
+(*
   fun compare (key,key') = 
       if key=key' then EQUAL
       else if key < key' then LESS
            else GREATER
+*)
 end;
 
 use "btpm.sml";
@@ -50,7 +54,7 @@ struct
   type state = DveModel.state * DveModel.event list;
 
   (* dummy progress function for now *)
-  fun getProgress (s,_) = btpm1 s
+  fun getProgress (s,_) = btpm3 s
 end;
 
 structure BT_SweepExploration = 
