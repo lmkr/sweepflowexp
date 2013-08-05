@@ -1,8 +1,20 @@
 -
 
-We could do the analysis both in a monotonic and a non-monotonic variant as per the loop.
+We could do the analysis both in a monotonic and a non-monotonic variant as per the loop. This can be done by not increasing progress inside the loop.
 
 -
 
 We could also look at a reduced model where structural reduction is
 applied to the model prior to conducting the analysis.
+
+- 
+
+For this particular example it could be of benefit to move the
+sweep-line back immediatly as a regress edge has been seen in order to
+avoid unnecssary exploration of a large part of the state space.
+
+-
+
+there is some potential problem with the statistics collected by the
+sweep-line exploration. Bot everything is initialised. Perhaps try to
+use the debug variant of the exploration.

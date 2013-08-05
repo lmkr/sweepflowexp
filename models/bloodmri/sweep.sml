@@ -30,15 +30,7 @@ struct
   val compare = IntInf.compare;
 end;
 
-(* trivial progress measure *)
-fun wspm0 _ = 0 : PM_ORD_KEY.ord_key;
-
-(* extract the monotonic progress components related to the main connection states *)
-fun wspm1 ({Example = {Completd = completed,
-                 P1 = p1,
-                 P2 = p2,
-                 P4 = p4,
-                 Start = start},...}: CPNToolsModel.state) = 1;
+use "pms.sml";
 
 (* setup of sweep-line exploration *)
 structure WS_PM : PROGRESS_MEASURE = 
@@ -46,7 +38,7 @@ struct
   structure Progress = PM_ORD_KEY
   type state = CPNToolsModel.state * CPNToolsModel.event list;
 
-  fun getProgress (s,_) = wspm0 s
+  fun getProgress (s,_) = wspm2 s
 end;
 
 structure WS_SweepExploration = 
@@ -61,3 +53,9 @@ fun slexplore () = WS_SweepExploration.explore
                     s_initial = (),
                     state_hook = fn (_,b) => b} (WSStorage.emptyStorage {init_size = 1000} is) iss;
 
+(*
+structure WS_SweepLineDebugExploration =
+SweepLineDebugExploration (structure Storage = WSStorage
+                           structure Exploration = WS_SweepExploration
+                           structure Measure = WS_PM);
+*)
