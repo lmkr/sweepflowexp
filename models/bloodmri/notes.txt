@@ -1,0 +1,8 @@
+-
+
+We could do the analysis both in a monotonic and a non-monotonic variant as per the loop.
+
+-
+
+We could also look at a reduced model where structural reduction is
+applied to the model prior to conducting the analysis.

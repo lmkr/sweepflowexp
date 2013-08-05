@@ -1,0 +1,123 @@
+/*DVE Translation from CWML
+Translation starts from root net
+(c)2010 Centre For Logic and Information
+Saint Francis Xavier University
+Nova Scotia, Canada*/
+
+
+int _Workflow_Composition_Ok = 1;
+int _BloodMRI_Start_SUC = 0;
+int _BloodMRI_Initial_Evaluation_SUC_0 = 0;
+int _BloodMRI_Initial_Evaluation_SUC_1 = 0;
+int _BloodMRI_Blood_Test_1_SUC = 0;
+int _BloodMRI_JOIN_6_SUC = 0;
+int _BloodMRI_Evaluation_1_SUC_0 = 0;
+int _BloodMRI_Evaluation_1_SUC_1 = 0;
+int _BloodMRI_Procedure_A_SUC = 0;
+int _BloodMRI_JOIN_10_SUC = 0;
+int _BloodMRI_LOOP_14_SUC = 0;
+int _BloodMRI_Take_Test_Drug_SUC = 0;
+int _BloodMRI_Blood_Test_2_SUC = 0;
+int _BloodMRI_LOOPC_13_SUC_0 = 0;
+int _BloodMRI_LOOPC_13_SUC_1 = 0;
+int _BloodMRI_Final_Evaluation_SUC = 0;
+int _BloodMRI_OutputCondition_SUC = 0;
+int _BloodMRI_Procedure_B_SUC = 0;
+int _BloodMRI_MRI_SUC = 0;
+int _BloodMRI_LOOP1Counter = 0;
+
+
+process BloodMRI_Start{
+state begin, end;
+init begin;
+trans
+begin -> end { effect _BloodMRI_Start_SUC = _BloodMRI_Start_SUC + 1 ;};
+}
+process BloodMRI_Initial_Evaluation{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Start_SUC > 0  ; effect _BloodMRI_Start_SUC = _BloodMRI_Start_SUC - 1  , _BloodMRI_Initial_Evaluation_SUC_0 = _BloodMRI_Initial_Evaluation_SUC_0 + 1 , _BloodMRI_Initial_Evaluation_SUC_1 = _BloodMRI_Initial_Evaluation_SUC_1 + 1  ;};
+}
+process BloodMRI_Blood_Test_1{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Initial_Evaluation_SUC_0 > 0 ; effect _BloodMRI_Initial_Evaluation_SUC_0 = _BloodMRI_Initial_Evaluation_SUC_0 - 1  , _BloodMRI_Blood_Test_1_SUC = _BloodMRI_Blood_Test_1_SUC + 1  ;};
+}
+process BloodMRI_JOIN_6{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Blood_Test_1_SUC > 0 & _BloodMRI_MRI_SUC > 0 ; effect _BloodMRI_Blood_Test_1_SUC = _BloodMRI_Blood_Test_1_SUC - 1 , _BloodMRI_MRI_SUC = _BloodMRI_MRI_SUC - 1 , _BloodMRI_JOIN_6_SUC = _BloodMRI_JOIN_6_SUC + 1  ;};
+}
+process BloodMRI_Evaluation_1{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_JOIN_6_SUC > 0  ; effect _BloodMRI_JOIN_6_SUC = _BloodMRI_JOIN_6_SUC - 1 , _BloodMRI_Evaluation_1_SUC_0 = _BloodMRI_Evaluation_1_SUC_0 + 1 ;},
+tr -> tr { guard _BloodMRI_JOIN_6_SUC > 0  ; effect _BloodMRI_JOIN_6_SUC = _BloodMRI_JOIN_6_SUC - 1 , _BloodMRI_Evaluation_1_SUC_1 = _BloodMRI_Evaluation_1_SUC_1 + 1 ;};
+}
+process BloodMRI_Procedure_A{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Evaluation_1_SUC_0 > 0 ; effect _BloodMRI_Evaluation_1_SUC_0 = _BloodMRI_Evaluation_1_SUC_0 - 1  , _BloodMRI_Procedure_A_SUC = _BloodMRI_Procedure_A_SUC + 1  ;};
+}
+process BloodMRI_JOIN_10{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Procedure_A_SUC > 0 ; effect _BloodMRI_Procedure_A_SUC = _BloodMRI_Procedure_A_SUC - 1 , _BloodMRI_JOIN_10_SUC = _BloodMRI_JOIN_10_SUC + 1  ;},
+tr -> tr { guard _BloodMRI_Procedure_B_SUC > 0 ; effect _BloodMRI_Procedure_B_SUC = _BloodMRI_Procedure_B_SUC - 1 , _BloodMRI_JOIN_10_SUC = _BloodMRI_JOIN_10_SUC + 1  ;};
+}
+process BloodMRI_LOOP_14{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_JOIN_10_SUC > 0 ; effect _BloodMRI_JOIN_10_SUC = _BloodMRI_JOIN_10_SUC - 1 , _BloodMRI_LOOP_14_SUC = _BloodMRI_LOOP_14_SUC + 1  ;},
+tr -> tr { guard _BloodMRI_LOOPC_13_SUC_1 > 0 ; effect _BloodMRI_LOOPC_13_SUC_1 = _BloodMRI_LOOPC_13_SUC_1 - 1 , _BloodMRI_LOOP_14_SUC = _BloodMRI_LOOP_14_SUC + 1  ;};
+}
+process BloodMRI_Take_Test_Drug{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_LOOP_14_SUC > 0 ; effect _BloodMRI_LOOP_14_SUC = _BloodMRI_LOOP_14_SUC - 1  , _BloodMRI_Take_Test_Drug_SUC = _BloodMRI_Take_Test_Drug_SUC + 1  ;};
+}
+process BloodMRI_Blood_Test_2{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Take_Test_Drug_SUC > 0 ; effect _BloodMRI_Take_Test_Drug_SUC = _BloodMRI_Take_Test_Drug_SUC - 1  , _BloodMRI_Blood_Test_2_SUC = _BloodMRI_Blood_Test_2_SUC + 1  ;};
+}
+process BloodMRI_LOOPC_13{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Blood_Test_2_SUC > 0  ; effect _BloodMRI_Blood_Test_2_SUC = _BloodMRI_Blood_Test_2_SUC - 1 , _BloodMRI_LOOP1Counter = _BloodMRI_LOOP1Counter + 1,  _BloodMRI_LOOPC_13_SUC_0 = _BloodMRI_LOOPC_13_SUC_0 + 1 * (_BloodMRI_LOOP1Counter == 5) , _BloodMRI_LOOPC_13_SUC_1 = _BloodMRI_LOOPC_13_SUC_1 + 1 * ((_BloodMRI_LOOPC_13_SUC_0 == 0)) ;};
+}
+process BloodMRI_Final_Evaluation{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_LOOPC_13_SUC_0 > 0 ; effect _BloodMRI_LOOPC_13_SUC_0 = _BloodMRI_LOOPC_13_SUC_0 - 1  , _BloodMRI_Final_Evaluation_SUC = _BloodMRI_Final_Evaluation_SUC + 1  ;};
+}
+process BloodMRI_OutputCondition{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Final_Evaluation_SUC > 0 ; };
+}
+process BloodMRI_Procedure_B{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Evaluation_1_SUC_1 > 0 ; effect _BloodMRI_Evaluation_1_SUC_1 = _BloodMRI_Evaluation_1_SUC_1 - 1  , _BloodMRI_Procedure_B_SUC = _BloodMRI_Procedure_B_SUC + 1  ;};
+}
+process BloodMRI_MRI{
+state tr;
+init tr;
+trans
+tr -> tr { guard _BloodMRI_Initial_Evaluation_SUC_1 > 0 ; effect _BloodMRI_Initial_Evaluation_SUC_1 = _BloodMRI_Initial_Evaluation_SUC_1 - 1  , _BloodMRI_MRI_SUC = _BloodMRI_MRI_SUC + 1  ;};
+}
+system async;

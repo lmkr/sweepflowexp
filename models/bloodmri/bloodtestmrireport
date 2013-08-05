@@ -1,0 +1,144 @@
+CPN Tools state space report for:
+/cygdrive/C/work/gitrepos/sweepflowexp/models/bloodmri/bloodtestmri.cpn
+Report generated: Mon Aug  5 10:10:01 2013
+
+
+ Statistics
+------------------------------------------------------------------------
+
+  State Space
+     Nodes:  18
+     Arcs:   20
+     Secs:   0
+     Status: Full
+
+  Scc Graph
+     Nodes:  15
+     Arcs:   16
+     Secs:   0
+
+
+ Boundedness Properties
+------------------------------------------------------------------------
+
+  Best Integer Bounds
+                             Upper      Lower
+     bloodtestmri'BT1 1      1          0
+     bloodtestmri'BT2 1      1          0
+     bloodtestmri'E1a 1      1          0
+     bloodtestmri'E1b 1      1          0
+     bloodtestmri'End 1      1          0
+     bloodtestmri'FE 1       1          0
+     bloodtestmri'IE1 1      1          0
+     bloodtestmri'IE2 1      1          0
+     bloodtestmri'Join10 1   1          0
+     bloodtestmri'Join6 1    1          0
+     bloodtestmri'LC13c 1    1          0
+     bloodtestmri'LCe 1      1          0
+     bloodtestmri'Loop14 1   1          0
+     bloodtestmri'MRI 1      1          0
+     bloodtestmri'PA 1       1          0
+     bloodtestmri'PB 1       1          0
+     bloodtestmri'Start 1    1          0
+     bloodtestmri'TTD 1      1          0
+
+  Best Upper Multi-set Bounds
+     bloodtestmri'BT1 1  1`()
+     bloodtestmri'BT2 1  1`()
+     bloodtestmri'E1a 1  1`()
+     bloodtestmri'E1b 1  1`()
+     bloodtestmri'End 1  1`()
+     bloodtestmri'FE 1   1`()
+     bloodtestmri'IE1 1  1`()
+     bloodtestmri'IE2 1  1`()
+     bloodtestmri'Join10 1
+                         1`()
+     bloodtestmri'Join6 1
+                         1`()
+     bloodtestmri'LC13c 1
+                         1`()
+     bloodtestmri'LCe 1  1`()
+     bloodtestmri'Loop14 1
+                         1`()
+     bloodtestmri'MRI 1  1`()
+     bloodtestmri'PA 1   1`()
+     bloodtestmri'PB 1   1`()
+     bloodtestmri'Start 1
+                         1`()
+     bloodtestmri'TTD 1  1`()
+
+  Best Lower Multi-set Bounds
+     bloodtestmri'BT1 1  empty
+     bloodtestmri'BT2 1  empty
+     bloodtestmri'E1a 1  empty
+     bloodtestmri'E1b 1  empty
+     bloodtestmri'End 1  empty
+     bloodtestmri'FE 1   empty
+     bloodtestmri'IE1 1  empty
+     bloodtestmri'IE2 1  empty
+     bloodtestmri'Join10 1
+                         empty
+     bloodtestmri'Join6 1
+                         empty
+     bloodtestmri'LC13c 1
+                         empty
+     bloodtestmri'LCe 1  empty
+     bloodtestmri'Loop14 1
+                         empty
+     bloodtestmri'MRI 1  empty
+     bloodtestmri'PA 1   empty
+     bloodtestmri'PB 1   empty
+     bloodtestmri'Start 1
+                         empty
+     bloodtestmri'TTD 1  empty
+
+
+ Home Properties
+------------------------------------------------------------------------
+
+  Home Markings
+     [18]
+
+
+ Liveness Properties
+------------------------------------------------------------------------
+
+  Dead Markings
+     [18]
+
+  Dead Transition Instances
+     None
+
+  Live Transition Instances
+     None
+
+
+ Fairness Properties
+------------------------------------------------------------------------
+
+  Impartial Transition Instances
+     bloodtestmri'BloodTest2 1
+     bloodtestmri'LOOPC_13c 1
+     bloodtestmri'Loop14n 1
+     bloodtestmri'TakeTestDrug 1
+
+  Fair Transition Instances
+     bloodtestmri'BloodTest1 1
+     bloodtestmri'End 1
+     bloodtestmri'Evaluation1a 1
+     bloodtestmri'Evaluation1b 1
+     bloodtestmri'FinalEvaluation 1
+     bloodtestmri'Initial_Evaluation 1
+     bloodtestmri'Join10a 1
+     bloodtestmri'Join10b 1
+     bloodtestmri'Join6 1
+     bloodtestmri'Loop14 1
+     bloodtestmri'MRI 1
+     bloodtestmri'ProcedureA 1
+     bloodtestmri'ProcedureB 1
+
+  Just Transition Instances
+     bloodtestmri'LOOPC_13e 1
+
+  Transition Instances with No Fairness
+     None
