@@ -444,8 +444,8 @@ fun sweepExplore
     (*
      *  a sweep of the algorithm
      *)
-    fun sweep ([], storage, sVal, aVal) = (storage, sVal, aVal)
-      | sweep (roots, storage, sVal, aVal) = let
+    fun sweep _ ([], storage, sVal, aVal) = (storage, sVal, aVal)
+      | sweep del (roots, storage, sVal, aVal) = let
 	    val _ = sweepHook (List.map #1 roots, storage)
 	    (*
 	     *  put root states into the queue (the toDel bit is set to false)
@@ -455,7 +455,7 @@ fun sweepExplore
 	    val queue =
 		List.foldl
 		    (fn ((s, id, trace), q) =>
-			PQ.insert ((s, id, getProgress s, false, trace), q))
+			PQ.insert ((s, id, getProgress s, del, trace), q))
 		    (PQ.mkQueue (fn (_, _, prog, _, _) => prog)) roots
 
             val _ = print ("storage = "^(Int.toString (Storage.numItems storage))^" queue = "^(Int.toString (PQ.numItems queue))^"\n");
@@ -468,7 +468,7 @@ fun sweepExplore
 		  | NONE => (storage, sVal, aVal);
 
 	in
-	    sweep (roots, storage, sVal, aVal)
+	    sweep false (roots, storage, sVal, aVal)
 	end
 
     (*
@@ -494,7 +494,7 @@ fun sweepExplore
 	    handleInitState ([], initStorage, s_initial) initStates
 
     val (storage, sVal, aVal) =
-	sweep (initRoots, initStorage, initSVal, a_initial)
+	sweep true (initRoots, initStorage, initSVal, a_initial)
 in
     (storage, sVal, aVal)
 end
