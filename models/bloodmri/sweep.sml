@@ -38,7 +38,10 @@ struct
   structure Progress = PM_ORD_KEY
   type state = CPNToolsModel.state * CPNToolsModel.event list;
 
-  fun getProgress (s,_) = wspm2 s
+  fun getProgress (s,_) = wspm1 s
+
+  fun print s = IntInf.toString (getProgress s);
+
 end;
 
 structure WS_SweepExploration = 

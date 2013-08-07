@@ -79,6 +79,9 @@ val getProgress:
     state
     -> Progress.ord_key
 
+
+val print: state -> string
+
 end
 
 
@@ -261,6 +264,7 @@ fun sweepExplore
 	     numStored := 0; (* LMK: fix *)
              peakNumQueue := 0;
 	     peakNumStored := 0)	     
+
     fun incrNums storage =
 	(numStored := Storage.numItems storage; (* LMK: !numStored + 1; *)
 	 numQueue := !numQueue + 1;
@@ -270,6 +274,7 @@ fun sweepExplore
 	 if !numStored > !peakNumStored
 	 then peakNumStored := !numStored
 	 else ())
+
     fun gc (storage, states, prog, sVal, aVal) = let
 	val (sVal, aVal) = gcHook (states, storage, prog, sVal, aVal)
 	val storage =
@@ -283,11 +288,14 @@ fun sweepExplore
 	    (((s1, s1Evts), s1Id, s1Prog, s1Del, s1Trace),
 	     unproc,
 	     (toDel, roots, storage, sVal, aVal)) = let
-        val _ = print "handle state\n";
+        val _ = print "handling state \n"; 
 
 	fun handleEvent
 		(s1Evt,
 		 (unproc, toDel, roots, storage, sVal, aVal)) = let	    
+
+            val _ = print "handleEvent\n";
+
 	    fun handleSucc
 		    ((s2, s2Evts),
 		     (unproc, toDel, roots, storage, sVal, aVal)) = let
@@ -296,7 +304,10 @@ fun sweepExplore
 		val aVal = arc_hook (((s1, s1Evts), s1Evt, (s2, s2Evts)),
 				     s1Trace, aVal)
 		val (s2Id, seen, storage) = Storage.add (storage, s2)
+                val _ = print ("handleSucc\n");
 	    in
+
+
 		if seen
 		then (unproc, toDel, roots, storage, sVal, aVal)
 		else let val s2Prog = getProgress (s2, s2Evts)
@@ -313,9 +324,9 @@ fun sweepExplore
 			   *     put s2 in the root state queue
 			   *)
 			  of GREATER =>
-			     (unproc, toDel,
+			     (print "---- REGRESS EDGE ----\n";(unproc, toDel,
 			      ((s2, s2Evts), s2Id, s2Trace) :: roots,
-			      storage, sVal, aVal)		    
+			      storage, sVal, aVal))		    
 			   (*
 			    *  non regress edge =>
 			    *     put s2 in the unprocessed state queue
@@ -332,14 +343,23 @@ fun sweepExplore
 		       (unproc, toDel, roots, storage, sVal, aVal)
 		       (Model.nextStates (s1, s1Evt))
 	end								     
+
 	val (unproc, toDel, roots, storage, sVal, aVal) =
 	    List.foldl handleEvent
 		       (unproc, toDel, roots, storage, sVal, aVal) s1Evts
-		       
+
+        val _ = (print ("state processed: "^
+			"s1Del = "^(Bool.toString s1Del)^
+                        " storage = "^(Int.toString(Storage.numItems storage))^
+                        " toDel = "^(Int.toString (case toDel of NONE => 0 | SOME (_,states) => List.length states))^
+                        " queue = "^(Int.toString (PQ.numItems unproc))^"\n"))
 	(*
 	 *  garbage collection.  the delete flag s1Del of state s1 must be true
 	 *  otherwise s1 is marked as persistent and must not be deleted
 	 *)
+
+
+        (* ------------  original deletion 
 	val (toDel, storage, sVal, aVal) =
 	    if not s1Del
 	    then (print "do not delete\n"; (toDel, storage, sVal, aVal))
@@ -361,6 +381,61 @@ fun sweepExplore
 				   storage, sVal, aVal))
 		       | LESS => raise LibBase.Impossible
 					   "error in SweepLineExploration"
+
+         ----------- *)
+        (* mark toDel as a state to delete if it is not persistent *)
+        (* LMK: check/investigate whether it is possible for the state to be marked as persistent after having been inserted in toDel *)
+        val toDel = if not s1Del
+                    then toDel
+                    else case toDel of 
+		    NONE => SOME (s1Prog, [(s1,s1Evts)])
+                  | SOME (value,states) => SOME (value,(s1,s1Evts)::states)
+ 
+
+        val _ = (print ("predelete check toDel = "^(Int.toString (case toDel of NONE => 0 | SOME (_,states) => List.length states))^"\n"))
+
+   
+        val (toDel, storage, sVal, aVal) = 
+	     case toDel of
+             NONE => (toDel,storage,sVal,aVal) (* no states to delete *)
+             | SOME (value,states) => (* potentially some states to delete *)
+               let
+                 val nextpvalue = case (PQ.next unproc) of 
+                                    NONE => NONE 
+                                  | SOME ((s2, s2Evts), s2Id,
+				    s2Prog, true, s2Trace) => SOME (getProgress (s2,s2Evts))
+
+               in
+                 case nextpvalue of 
+                 NONE => let
+                           val _ = (print "current sweep done");
+                           val (storage,sVal,aVal) = gc (storage,states,s1Prog,sVal,aVal) (* current sweep done delete all we have *)
+                         in 
+                           (NONE,storage,sVal,aVal)
+                         end
+                 | SOME pv => 
+		         case Progress.compare (pv,s1Prog) of 
+                          GREATER => let (* sweep-line will move next so delete all *) 
+                                       val _ = print ("moving layer\n");
+                                       val (storage,sVal,aVal) = gc (storage,states,value,sVal,aVal) (* LMK: use of value not correct*)
+                                     in 
+                                       (NONE,storage,sVal,aVal)
+                                     end
+                        | EQUAL => let  (* still in the same layer *)
+			  	       val _ = print ("same layer\n") 
+                                   in 
+			  	       (toDel,storage,sVal,aVal)
+                                   end
+		        | LESS => raise LibBase.Impossible
+					   "error in SweepLineExploration"
+              end
+
+
+        val _ = (print ("deletion performed: "^
+                        " storage = "^(Int.toString(Storage.numItems storage))^
+                        " toDel = "^(Int.toString (case toDel of NONE => 0 | SOME (_,states) => List.length states))^
+                        " queue = "^(Int.toString (PQ.numItems unproc))^"\n"))
+
     in
 	numQueue := !numQueue - 1;
 	(unproc, (toDel, roots, storage, sVal, aVal))
@@ -375,19 +450,23 @@ fun sweepExplore
 	    (*
 	     *  put root states into the queue (the toDel bit is set to false)
 	     *)
-            val _ = print "sweeping\n";
+            val _ = print ("sweeping: "^(Int.toString(List.length roots))^" roots\n");
 
 	    val queue =
 		List.foldl
 		    (fn ((s, id, trace), q) =>
 			PQ.insert ((s, id, getProgress s, false, trace), q))
 		    (PQ.mkQueue (fn (_, _, prog, _, _) => prog)) roots
+
+            val _ = print ("storage = "^(Int.toString (Storage.numItems storage))^" queue = "^(Int.toString (PQ.numItems queue))^"\n");
+
 	    val (toDel, roots, storage, sVal, aVal) =
 		PQ.fold handleState queue (NONE, [], storage, sVal, aVal)
 	    val (storage, sVal, aVal) =
 		case toDel
 		 of SOME (value, ids) => gc (storage, ids, value, sVal, aVal)
-		  | NONE => (storage, sVal, aVal)
+		  | NONE => (storage, sVal, aVal);
+
 	in
 	    sweep (roots, storage, sVal, aVal)
 	end
@@ -591,10 +670,11 @@ fun explore { a_initial,
 	persistentStates := (List.length roots) :: (!persistentStates)
     end
     fun gcHook (toDelete, storage, prog, sVal, aVal) =
-	( print ("\nDeleting "^
+	( (*print ("deleting "^
                  (Int.toString (Storage.numItems storage))^
                  " - "^
-                 (Int.toString (List.length toDelete))); (* LMK *)
+                 (Int.toString (List.length toDelete))^
+                 "\n"); (* LMK *)*)
           gcStates := (List.length toDelete) :: (!gcStates);
 	 (sVal, aVal))
     fun arcHook (arc as (s1, _, s2), _, aVal) = let
