@@ -31,3 +31,10 @@ mark the entry of loops and make them persistent straightaway.
 Working on the DVE version:
 
 _ in front of identifiers had to be removed.
+
+In this version processes does not have internal states as earlier. 
+
+Statistics: Exploration of DVE model sweep=1,arcs=35,states=33, peak=5 (reduction to 15%)
+            Exploration of CPN model sweep=1 arcs=38,states=37, peak=3 (reduction to  8%)
+
+There is a slight difference in size of state space and also peak. This just needs to be checked.
