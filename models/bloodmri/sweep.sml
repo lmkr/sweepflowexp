@@ -1,5 +1,7 @@
 open ASAP;
 
+use "sweep-line-exploration.sml";
+
 (* setup a simple ordinary state space exploration *)
 structure WSStorage = HashStorage(structure Model = CPNToolsModel
                                   structure Hash=CPNToolsHashFunction);
@@ -30,7 +32,7 @@ struct
   val compare = IntInf.compare;
 end;
 
-use "pms.sml";
+use "pmscounter.sml";
 
 (* setup of sweep-line exploration *)
 structure WS_PM : PROGRESS_MEASURE = 

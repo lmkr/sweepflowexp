@@ -56,6 +56,7 @@ fun extractpm1 ({bloodtestmri = {
                  Start = start,
                  TTD = ttd}} : CPNToolsModel.state) = 
 		 List.map ims 
+
 		 [start,ie1,bt1,ie2,mri1,
                   j6p,e1a,pa,e1b,pb,
                   join10,loop14p,ttd,bt2,lc13c,
@@ -82,7 +83,8 @@ fun extractpm2 ({bloodtestmri = {
                  Start = start,
                  TTD = ttd}} : CPNToolsModel.state) = 
 		 List.map ims 
-		 [start,ie1,bt1,ie2,mri1,
+		 [
+                  start,ie1,bt1,ie2,mri1,
                   j6p,e1a,pa,e1b,pb,
                   join10,
                   List.concat [loop14p,ttd,bt2,lc13c],

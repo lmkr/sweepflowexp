@@ -82,24 +82,42 @@ P_bloodmri_evaluation_1_S,
 P_bloodmri_join_6_S,
 P_bloodmri_blood_test_1_S,
 P_bloodmri_initial_evaluation_S,
-P_bloodmri_start_S}) = basemap 2 [
-	GV_bloodmri_loop1counter ,
-	GV_bloodmri_mri_suc,
-	GV_bloodmri_procedure_b_suc,
+P_bloodmri_start_S}) = basemap 10 [
+
 	GV_bloodmri_outputcondition_suc,
+
 	GV_bloodmri_final_evaluation_suc,
-	GV_bloodmri_loopc_13_suc_1,
+
 	GV_bloodmri_loopc_13_suc_0,
+
+	GV_bloodmri_loop1counter,
+
+	(* GV_bloodmri_loopc_13_suc_1, *)
+
 	GV_bloodmri_blood_test_2_suc,
+
 	GV_bloodmri_take_test_drug_suc,
+
 	GV_bloodmri_loop_14_suc,
+
 	GV_bloodmri_join_10_suc,
+
+	GV_bloodmri_procedure_b_suc,
 	GV_bloodmri_procedure_a_suc,
+
 	GV_bloodmri_evaluation_1_suc_1,
 	GV_bloodmri_evaluation_1_suc_0,
+
 	GV_bloodmri_join_6_suc,
+
+	GV_bloodmri_mri_suc,
+
 	GV_bloodmri_blood_test_1_suc,
+
 	GV_bloodmri_initial_evaluation_suc_1,
 	GV_bloodmri_initial_evaluation_suc_0,
-	GV_bloodmri_start_suc,
-	GV_workflow_composition_ok ] (IntInf.fromInt 0)
+
+	GV_bloodmri_start_suc
+
+	(* GV_workflow_composition_ok NOT USED *)
+    ] (IntInf.fromInt 0)
