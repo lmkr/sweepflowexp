@@ -1,0 +1,34 @@
+(*
+ * File:            all-no-ind.cm
+ * Generation date: Mon Aug 12 07:57:29 2013
+ *)
+
+library
+	structure DveDefinitions
+	structure DveEnablingTest
+	structure DveEventExecution
+	structure DveModel
+	structure DveStateSerializer
+	structure DveEventSerializer
+	structure DveEventListSerializer
+	structure DveStateOrder
+	structure DveEventOrder
+	structure DveHashFunction
+	structure DveComponentsHashFunction
+	structure DveLargeComponentsHashFunction
+	structure DveComponents
+	structure DveLargeComponents
+is
+
+#if (defined(SMLNJ_VERSION))
+	$/basis.cm
+	$/smlnj-lib.cm
+#endif
+	definitions.sml
+	enabling-test.sml
+	event-execution.sml
+	model.sml
+	serializer.sml
+	order.sml
+	hash-function.sml
+	components.sml

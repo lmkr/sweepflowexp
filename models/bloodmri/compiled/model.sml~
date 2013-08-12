@@ -1,0 +1,207 @@
+(*
+ * File:            model.sml
+ * Generation date: Mon Aug 12 07:57:29 2013
+ *
+ * Run-time checks: true
+ *)
+
+structure DveModel: MODEL = struct
+open DveDefinitions
+open DveEnablingTest
+open DveEventExecution
+fun getInitialStates () = let
+   fun generateInitialState () = let
+      val tmp1 = (1)
+      val tmp2 = (0)
+      val tmp3 = (0)
+      val tmp4 = (0)
+      val tmp5 = (0)
+      val tmp6 = (0)
+      val tmp7 = (0)
+      val tmp8 = (0)
+      val tmp9 = (0)
+      val tmp10 = (0)
+      val tmp11 = (0)
+      val tmp12 = (0)
+      val tmp13 = (0)
+      val tmp14 = (0)
+      val tmp15 = (0)
+      val tmp16 = (0)
+      val tmp17 = (0)
+      val tmp18 = (0)
+      val tmp19 = (0)
+      val tmp20 = (0)
+   in
+      {
+GV_bloodmri_loop1counter =
+tmp20,
+GV_bloodmri_mri_suc =
+tmp19,
+GV_bloodmri_procedure_b_suc =
+tmp18,
+GV_bloodmri_outputcondition_suc =
+tmp17,
+GV_bloodmri_final_evaluation_suc =
+tmp16,
+GV_bloodmri_loopc_13_suc_1 =
+tmp15,
+GV_bloodmri_loopc_13_suc_0 =
+tmp14,
+GV_bloodmri_blood_test_2_suc =
+tmp13,
+GV_bloodmri_take_test_drug_suc =
+tmp12,
+GV_bloodmri_loop_14_suc =
+tmp11,
+GV_bloodmri_join_10_suc =
+tmp10,
+GV_bloodmri_procedure_a_suc =
+tmp9,
+GV_bloodmri_evaluation_1_suc_1 =
+tmp8,
+GV_bloodmri_evaluation_1_suc_0 =
+tmp7,
+GV_bloodmri_join_6_suc =
+tmp6,
+GV_bloodmri_blood_test_1_suc =
+tmp5,
+GV_bloodmri_initial_evaluation_suc_1 =
+tmp4,
+GV_bloodmri_initial_evaluation_suc_0 =
+tmp3,
+GV_bloodmri_start_suc =
+tmp2,
+GV_workflow_composition_ok =
+tmp1,
+P_bloodmri_mri_S =
+INIT_P_bloodmri_mri,
+P_bloodmri_procedure_b_S =
+INIT_P_bloodmri_procedure_b,
+P_bloodmri_outputcondition_S =
+INIT_P_bloodmri_outputcondition,
+P_bloodmri_final_evaluation_S =
+INIT_P_bloodmri_final_evaluation,
+P_bloodmri_loopc_13_S =
+INIT_P_bloodmri_loopc_13,
+P_bloodmri_blood_test_2_S =
+INIT_P_bloodmri_blood_test_2,
+P_bloodmri_take_test_drug_S =
+INIT_P_bloodmri_take_test_drug,
+P_bloodmri_loop_14_S =
+INIT_P_bloodmri_loop_14,
+P_bloodmri_join_10_S =
+INIT_P_bloodmri_join_10,
+P_bloodmri_procedure_a_S =
+INIT_P_bloodmri_procedure_a,
+P_bloodmri_evaluation_1_S =
+INIT_P_bloodmri_evaluation_1,
+P_bloodmri_join_6_S =
+INIT_P_bloodmri_join_6,
+P_bloodmri_blood_test_1_S =
+INIT_P_bloodmri_blood_test_1,
+P_bloodmri_initial_evaluation_S =
+INIT_P_bloodmri_initial_evaluation,
+P_bloodmri_start_S =
+INIT_P_bloodmri_start
+}
+   end
+   val init = generateInitialState ()
+in
+   [ (init, getEnabledEvents (init)) ]
+end
+fun stateToString (s: state) = let
+in
+   "{" ^
+   "\n   Workflow_Composition_Ok = " ^ baseToString(#GV_workflow_composition_ok s) ^ "" ^
+   "\n   BloodMRI_Start_SUC = " ^ baseToString(#GV_bloodmri_start_suc s) ^ "" ^
+   "\n   BloodMRI_Initial_Evaluation_SUC_0 = " ^ baseToString(#GV_bloodmri_initial_evaluation_suc_0 s) ^ "" ^
+   "\n   BloodMRI_Initial_Evaluation_SUC_1 = " ^ baseToString(#GV_bloodmri_initial_evaluation_suc_1 s) ^ "" ^
+   "\n   BloodMRI_Blood_Test_1_SUC = " ^ baseToString(#GV_bloodmri_blood_test_1_suc s) ^ "" ^
+   "\n   BloodMRI_JOIN_6_SUC = " ^ baseToString(#GV_bloodmri_join_6_suc s) ^ "" ^
+   "\n   BloodMRI_Evaluation_1_SUC_0 = " ^ baseToString(#GV_bloodmri_evaluation_1_suc_0 s) ^ "" ^
+   "\n   BloodMRI_Evaluation_1_SUC_1 = " ^ baseToString(#GV_bloodmri_evaluation_1_suc_1 s) ^ "" ^
+   "\n   BloodMRI_Procedure_A_SUC = " ^ baseToString(#GV_bloodmri_procedure_a_suc s) ^ "" ^
+   "\n   BloodMRI_JOIN_10_SUC = " ^ baseToString(#GV_bloodmri_join_10_suc s) ^ "" ^
+   "\n   BloodMRI_LOOP_14_SUC = " ^ baseToString(#GV_bloodmri_loop_14_suc s) ^ "" ^
+   "\n   BloodMRI_Take_Test_Drug_SUC = " ^ baseToString(#GV_bloodmri_take_test_drug_suc s) ^ "" ^
+   "\n   BloodMRI_Blood_Test_2_SUC = " ^ baseToString(#GV_bloodmri_blood_test_2_suc s) ^ "" ^
+   "\n   BloodMRI_LOOPC_13_SUC_0 = " ^ baseToString(#GV_bloodmri_loopc_13_suc_0 s) ^ "" ^
+   "\n   BloodMRI_LOOPC_13_SUC_1 = " ^ baseToString(#GV_bloodmri_loopc_13_suc_1 s) ^ "" ^
+   "\n   BloodMRI_Final_Evaluation_SUC = " ^ baseToString(#GV_bloodmri_final_evaluation_suc s) ^ "" ^
+   "\n   BloodMRI_OutputCondition_SUC = " ^ baseToString(#GV_bloodmri_outputcondition_suc s) ^ "" ^
+   "\n   BloodMRI_Procedure_B_SUC = " ^ baseToString(#GV_bloodmri_procedure_b_suc s) ^ "" ^
+   "\n   BloodMRI_MRI_SUC = " ^ baseToString(#GV_bloodmri_mri_suc s) ^ "" ^
+   "\n   BloodMRI_LOOP1Counter = " ^ baseToString(#GV_bloodmri_loop1counter s) ^ "" ^
+   "\n   BloodMRI_Start @ " ^ P_bloodmri_start_STATE_TYPE_ToString (#P_bloodmri_start_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Initial_Evaluation @ " ^ P_bloodmri_initial_evaluation_STATE_TYPE_ToString (#P_bloodmri_initial_evaluation_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Blood_Test_1 @ " ^ P_bloodmri_blood_test_1_STATE_TYPE_ToString (#P_bloodmri_blood_test_1_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_JOIN_6 @ " ^ P_bloodmri_join_6_STATE_TYPE_ToString (#P_bloodmri_join_6_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Evaluation_1 @ " ^ P_bloodmri_evaluation_1_STATE_TYPE_ToString (#P_bloodmri_evaluation_1_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Procedure_A @ " ^ P_bloodmri_procedure_a_STATE_TYPE_ToString (#P_bloodmri_procedure_a_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_JOIN_10 @ " ^ P_bloodmri_join_10_STATE_TYPE_ToString (#P_bloodmri_join_10_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_LOOP_14 @ " ^ P_bloodmri_loop_14_STATE_TYPE_ToString (#P_bloodmri_loop_14_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Take_Test_Drug @ " ^ P_bloodmri_take_test_drug_STATE_TYPE_ToString (#P_bloodmri_take_test_drug_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Blood_Test_2 @ " ^ P_bloodmri_blood_test_2_STATE_TYPE_ToString (#P_bloodmri_blood_test_2_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_LOOPC_13 @ " ^ P_bloodmri_loopc_13_STATE_TYPE_ToString (#P_bloodmri_loopc_13_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Final_Evaluation @ " ^ P_bloodmri_final_evaluation_STATE_TYPE_ToString (#P_bloodmri_final_evaluation_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_OutputCondition @ " ^ P_bloodmri_outputcondition_STATE_TYPE_ToString (#P_bloodmri_outputcondition_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_Procedure_B @ " ^ P_bloodmri_procedure_b_STATE_TYPE_ToString (#P_bloodmri_procedure_b_S s) ^ " {" ^
+   "\n   }" ^
+   "\n   BloodMRI_MRI @ " ^ P_bloodmri_mri_STATE_TYPE_ToString (#P_bloodmri_mri_S s) ^ " {" ^
+   "\n   }" ^
+"\n}\n"
+end
+fun eventToString (e: event) =
+   case e
+    of DUMMY_EVENT => ""
+    | LOC_0_P_bloodmri_start_T_begin_TO_end => "(BloodMRI_Start: begin -> end)"
+    | LOC_1_P_bloodmri_initial_evaluation_T_tr_TO_tr => "(BloodMRI_Initial_Evaluation: tr -> tr)"
+    | LOC_2_P_bloodmri_blood_test_1_T_tr_TO_tr => "(BloodMRI_Blood_Test_1: tr -> tr)"
+    | LOC_3_P_bloodmri_join_6_T_tr_TO_tr => "(BloodMRI_JOIN_6: tr -> tr)"
+    | LOC_4_P_bloodmri_evaluation_1_T_tr_TO_tr => "(BloodMRI_Evaluation_1: tr -> tr)"
+    | LOC_5_P_bloodmri_evaluation_1_T_tr_TO_tr => "(BloodMRI_Evaluation_1: tr -> tr)"
+    | LOC_6_P_bloodmri_procedure_a_T_tr_TO_tr => "(BloodMRI_Procedure_A: tr -> tr)"
+    | LOC_7_P_bloodmri_join_10_T_tr_TO_tr => "(BloodMRI_JOIN_10: tr -> tr)"
+    | LOC_8_P_bloodmri_join_10_T_tr_TO_tr => "(BloodMRI_JOIN_10: tr -> tr)"
+    | LOC_9_P_bloodmri_loop_14_T_tr_TO_tr => "(BloodMRI_LOOP_14: tr -> tr)"
+    | LOC_10_P_bloodmri_loop_14_T_tr_TO_tr => "(BloodMRI_LOOP_14: tr -> tr)"
+    | LOC_11_P_bloodmri_take_test_drug_T_tr_TO_tr => "(BloodMRI_Take_Test_Drug: tr -> tr)"
+    | LOC_12_P_bloodmri_blood_test_2_T_tr_TO_tr => "(BloodMRI_Blood_Test_2: tr -> tr)"
+    | LOC_13_P_bloodmri_loopc_13_T_tr_TO_tr => "(BloodMRI_LOOPC_13: tr -> tr)"
+    | LOC_14_P_bloodmri_final_evaluation_T_tr_TO_tr => "(BloodMRI_Final_Evaluation: tr -> tr)"
+    | LOC_15_P_bloodmri_outputcondition_T_tr_TO_tr => "(BloodMRI_OutputCondition: tr -> tr)"
+    | LOC_16_P_bloodmri_procedure_b_T_tr_TO_tr => "(BloodMRI_Procedure_B: tr -> tr)"
+    | LOC_17_P_bloodmri_mri_T_tr_TO_tr => "(BloodMRI_MRI: tr -> tr)"
+fun nextStates (s, DUMMY_EVENT) = raise Impossible ""
+  | nextStates (s, e) = let
+   val next = execEvent (s, e)
+in
+   [ (next, getEnabledEvents (next)) ]
+end
+fun executeSequence (s: state, seq: event list) = let
+   fun loop ((s, evts), seq) =
+      (s, evts) :: 
+      (case seq of [] => []
+                 | evt :: seq' => let
+                    val next     = execEvent (s, evt)
+                    val nextEvts = getEnabledEvents (next)
+                 in
+                    loop ((next, nextEvts), seq')
+                 end)
+in
+   loop ((s, getEnabledEvents s), seq)
+end
+end

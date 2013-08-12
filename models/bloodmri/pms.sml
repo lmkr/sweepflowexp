@@ -10,6 +10,31 @@ fun ims [] = 0
 (* trivial progress measure *)
 fun wspm0 _ = 0 : PM_ORD_KEY.ord_key;
 
+fun pm1 ({bloodtestmri = {
+                 BT1 = bt1,
+ 		 BT2 = bt2, 
+		 E1a = e1a,
+     		 E1b = e1b,
+                 End = end1,
+                 FE = fe,
+                 IE1 = ie1,
+                 IE2 = ie2,
+                 J6P = j6p,
+                 Join10 = join10,
+                 LC13c = lc13c,
+                 LCe = lce,
+                 Loop14P = loop14p,
+                 MRI1 = mri1,
+                 PA = pa,
+                 PB = pb,
+                 Start = start,
+                 TTD = ttd}} : CPNToolsModel.state) = 
+		 List.map ims 
+		 [start,ie1,bt1,ie2,mri1,
+                  j6p,e1a,pa,e1b,pb,
+                  join10,loop14p,ttd,bt2,lc13c,
+                  lce,fe,end1]
+
 (* non-monotonic progress measure - progres in loop *)
 fun extractpm1 ({bloodtestmri = {
                  BT1 = bt1,

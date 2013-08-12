@@ -1,6 +1,8 @@
 -
 
-We could do the analysis both in a monotonic and a non-monotonic variant as per the loop. This can be done by not increasing progress inside the loop.
+We could do the analysis both in a monotonic and a non-monotonic
+variant as per the loop. This can be done by not increasing progress
+inside the loop.
 
 -
 
@@ -18,3 +20,14 @@ avoid unnecssary exploration of a large part of the state space.
 there is some potential problem with the statistics collected by the
 sweep-line exploration. Bot everything is initialised. Perhaps try to
 use the debug variant of the exploration.
+
+- 
+
+the use of a persistence predicate could also be of benefit here to
+mark the entry of loops and make them persistent straightaway.
+
+-
+
+Working on the DVE version:
+
+_ in front of identifiers had to be removed.
