@@ -38,3 +38,12 @@ Statistics: Exploration of DVE model sweep=1,arcs=35,states=33, peak=5 (reductio
             Exploration of CPN model sweep=1 arcs=38,states=37, peak=3 (reduction to  8%)
 
 There is a slight difference in size of state space and also peak. This just needs to be checked.
+
+-
+
+Maybe it can be proved from the way that we define the progress
+measure based on the structure of the workflow that we can never
+encounter a regress edge that we have not seen in the forward flow. In
+this way we can totally ignore states at the end of regress edges. If
+this is not the case, then we can provide an example saying why this
+is not so - which would also be a contribution. 
