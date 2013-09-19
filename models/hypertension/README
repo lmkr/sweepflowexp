@@ -1,0 +1,19 @@
+Document describing the tool chain used to analyse model
+
+// start ml from the command prompt
+
+>cd <X>/hypertension
+>sml
+
+// load the ASAP and the DVE compiler
+- use "loadcompiler.sml";
+
+// load the DVE model loader function
+- use "modelloader.sml";
+
+// parse the model
+- parsemodel "hypertension.mdve";
+
+// compile the model
+- compilemodel "hypertension.mdve";
+
